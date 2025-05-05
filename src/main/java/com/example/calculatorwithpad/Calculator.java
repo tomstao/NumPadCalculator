@@ -9,10 +9,10 @@ import javafx.scene.text.Font;
 import java.util.LinkedList;
 
 public class Calculator {
-    final private GridPane root = new GridPane();
     final private VBox container = new VBox();
 
     Calculator() {
+        GridPane root = new GridPane();
         for (int i = 0; i < 4; i++) {
             ColumnConstraints column = new ColumnConstraints();
             column.setPercentWidth(25);
@@ -184,6 +184,7 @@ public class Calculator {
         }
 
         LinkedList<Double> stack = new LinkedList<>();
+        stack.add(0.0);
         char lastOperator = '+';
         int i = 0;
 
@@ -305,9 +306,10 @@ public class Calculator {
             return num1 * num2;
         }
     */
-    public GridPane getRoot() {
-        return root;
-    }
+
+//    public GridPane getRoot() {
+//        return root;
+//    }
 
     public VBox getContainer() {
         return container;
