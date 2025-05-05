@@ -143,6 +143,7 @@ public class Calculator {
 //        }
 //        return true;
 //    }
+    /*
     private void displayAnalysis(TextField display) {
         String value = display.getText();
         double sum = 0;
@@ -173,6 +174,8 @@ public class Calculator {
         display.setText(Double.toString(sum));
     }
 
+     */
+
     private void numParse(TextField display) {
         String value = display.getText().trim();
         if (value.isEmpty()) {
@@ -198,22 +201,8 @@ public class Calculator {
                 } catch (NumberFormatException e) {
                     display.setText("Invalid input!");
                 }
-
-                switch (lastOperator) {
-                    case '+':
-                        stack.push(num);
-                        break;
-                    case '-':
-                        stack.push(-num);
-                        break;
-                    case '*':
-                        stack.push(stack.pop() * num);
-                        break;
-                    case '/':
-                        stack.push(stack.pop() / num);
-                        break;
-                }
-                continue; // skip i++ here since already moved forward
+                calculationChain(lastOperator, stack, num);
+                continue; //  move forward
             } else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
                 lastOperator = ch;
             } else {
@@ -229,6 +218,23 @@ public class Calculator {
         }
 
         display.setText(Double.toString(sum));
+    }
+
+    private void calculationChain(char operator, LinkedList<Double> stack, double num) {
+        switch (operator) {
+            case '+':
+                stack.push(num);
+                break;
+            case '-':
+                stack.push(-num);
+                break;
+            case '*':
+                stack.push(stack.pop() * num);
+                break;
+            case '/':
+                stack.push(stack.pop() / num);
+                break;
+        }
     }
 
     /*
