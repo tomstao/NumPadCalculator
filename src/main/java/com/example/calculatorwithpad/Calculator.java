@@ -91,15 +91,49 @@ public class Calculator {
         GridPane.setVgrow(btn, Priority.ALWAYS);
         grid.add(btn, col, row);
     }
-
+    /*
     private void addBtnAction(Button button, TextField display, String symbol) {
         if (symbol.equals("=")) {
             button.setOnAction(e -> numParse(display));
             return;
         }
+
+        if (symbol.equals("+") || symbol.equals("-") || symbol.equals("*") || symbol.equals("/")) {
+            int len = display.getText().length();
+            if (!Character.isDigit(display.getText().length() - 1)) {
+                button.setOnAction(e -> display.setText(display.getText().substring(len - 1) + symbol));
+                return;
+            }
+        }
         button.setOnAction(e -> display.setText(display.getText() + symbol));
     }
+*/
+    private void addBtnAction(Button button, TextField display, String symbol) {
+        if (symbol.equals("=")) {
+            button.setOnAction(e -> numParse(display));
+            return;
+        }
 
+        button.setOnAction(e -> {
+            String text = display.getText();
+            if (text.isEmpty()) {
+                if ("+-*/".contains(symbol)) return;
+                display.setText(symbol);
+                return;
+            }
+
+            char lastChar = text.charAt(text.length() - 1);
+            if ("+-*/".contains(symbol)) {
+                if ("+-*/".indexOf(lastChar) != -1) {
+                    display.setText(text.substring(0, text.length() - 1) + symbol);
+                } else {
+                    display.setText(text + symbol);
+                }
+            } else {
+                display.setText(text + symbol);
+            }
+        });
+    }
 //    private void displayAnalysis(TextField display) {
 ////        LinkedList<Double> results = new LinkedList<>();
 //        String value = display.getText();
@@ -175,7 +209,6 @@ public class Calculator {
     }
 
      */
-
     private void numParse(TextField display) {
         String value = display.getText().trim();
         if (value.isEmpty()) {
@@ -197,8 +230,8 @@ public class Calculator {
                     i++;
                 }
                 double num = 0;
-                try{
-                num = Double.parseDouble(value.substring(start, i));
+                try {
+                    num = Double.parseDouble(value.substring(start, i));
                 } catch (NumberFormatException e) {
                     display.setText("Invalid input!");
                 }
