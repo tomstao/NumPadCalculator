@@ -91,6 +91,7 @@ public class Calculator {
         GridPane.setVgrow(btn, Priority.ALWAYS);
         grid.add(btn, col, row);
     }
+
     /*
     private void addBtnAction(Button button, TextField display, String symbol) {
         if (symbol.equals("=")) {
@@ -237,7 +238,7 @@ public class Calculator {
                 }
                 calculationChain(lastOperator, stack, num);
                 continue; //  move forward
-            } else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            } else if ("+-*/".indexOf(ch) != -1) {
                 lastOperator = ch;
             } else {
                 display.setText("Invalid input! Please clear.");
@@ -254,8 +255,8 @@ public class Calculator {
         display.setText(Double.toString(sum));
     }
 
-    private void calculationChain(char operator, LinkedList<Double> stack, double num) {
-        switch (operator) {
+    private void calculationChain(char lastOperator, LinkedList<Double> stack, double num) {
+        switch (lastOperator) {
             case '+':
                 stack.push(num);
                 break;
